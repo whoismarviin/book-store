@@ -13,11 +13,11 @@ import javax.inject.Inject
 class CriaLivroController(@Inject val cliente: CqlSession) {
 
     @Post("/cadastro")
-    fun createLivro(livro: Livro, request: CriaLivroRequest): HttpResponse<Any> {
+    fun createLivro(request: CriaLivroRequest): HttpResponse<Any> {
         val book = request.toModel()
         val livroCadastrado = cliente.execute(
             SimpleStatement.newInstance(
-                "INSERT INTO livro.Livro(id,nome,numero_de_paginas,isbn,preco) VALUES (?,?,?,?,?)",
+                "INSERT INTO book.Livro(id,nome,numero_de_paginas,isbn,preco) VALUES (?,?,?,?,?)",
                 book.id,
                 book.nome,
                 book.numero_de_paginas,
