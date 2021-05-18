@@ -8,32 +8,17 @@ import io.micronaut.http.MediaType.APPLICATION_JSON
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Produces
-import java.util.*
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
+
 @Controller("api/livros")
-class CriaLivroController(@Inject val cliente: CqlSession) {
+class LivroController(private val service: takeBookImpl) {
 
     @Post("/cadastro")
     @Produces(APPLICATION_JSON)
     fun createLivro(@Body request: CriaLivroRequest): HttpResponse<Any> {
         val book = request.toModel()
-        val livroCadastrado = cliente.execute(
-            SimpleStatement.newInstance(
-                "INSERT INTO book.Livro(id,nome,numero_de_paginas,isbn,preco) VALUES (?,?,?,?,?)",
-                UUID.randomUUID(),
-                book.nome,
-                book.numero_de_paginas,
-                book.isbn,
-                book.preco
-
-            )
-        )
-
-        return HttpResponse.ok(livroCadastrado)
-
+        val livroCadastrado = service.createBook(book);
+        return HttpResponse.ok(book)
     }
 
 }
