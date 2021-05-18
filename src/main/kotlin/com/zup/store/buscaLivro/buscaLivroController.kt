@@ -2,8 +2,9 @@ package com.zup.store.buscaLivro
 
 import com.datastax.oss.driver.api.core.CqlSession
 import io.micronaut.http.HttpResponse
-import io.micronaut.http.annotation.Controller
-import io.micronaut.http.annotation.Get
+import io.micronaut.http.MediaType.APPLICATION_JSON
+import io.micronaut.http.annotation.*
+import java.util.*
 import javax.inject.Inject
 
 
@@ -11,6 +12,7 @@ import javax.inject.Inject
 class buscaLivroController(@Inject private val session: CqlSession) {
 
     @Get("/")
+    @Produces(APPLICATION_JSON)
     fun buscaLivro(): HttpResponse<List<Any>> {
         val livros = session.execute("SELECT * FROM LIVRO").toList()
 
@@ -18,5 +20,14 @@ class buscaLivroController(@Inject private val session: CqlSession) {
 
 
     }
+
+    @Get("/id")
+    @Produces(APPLICATION_JSON)
+    fun buscaLivroPorAutor(@PathVariable id: UUID): HttpResponse<Any> {
+        val livro = session.execute("SELECT * FROM book.LIVRO WHERE Livro.id = id", id)
+
+        return HttpResponse.ok(livro)
+    }
+
 
 }

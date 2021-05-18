@@ -8,6 +8,7 @@ import io.micronaut.http.MediaType.APPLICATION_JSON
 import io.micronaut.http.annotation.Body
 import io.micronaut.http.annotation.Post
 import io.micronaut.http.annotation.Produces
+import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,7 +23,7 @@ class CriaLivroController(@Inject val cliente: CqlSession) {
         val livroCadastrado = cliente.execute(
             SimpleStatement.newInstance(
                 "INSERT INTO book.Livro(id,nome,numero_de_paginas,isbn,preco) VALUES (?,?,?,?,?)",
-                book.id,
+                UUID.randomUUID(),
                 book.nome,
                 book.numero_de_paginas,
                 book.isbn,
