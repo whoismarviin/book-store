@@ -2,13 +2,13 @@ package com.zup.store.criaLivro
 
 import com.datastax.oss.driver.api.core.CqlIdentifier
 import com.datastax.oss.driver.api.core.CqlSession
-import com.datastax.oss.driver.api.core.cql.Row
 import com.datastax.oss.driver.api.core.cql.SimpleStatement
 import com.zup.store.Livro
+import java.util.*
 import javax.inject.Singleton
 
 @Singleton
-class takeBookImpl(private val session: CqlSession) : TakeBookData {
+class TakeBookImpl(private val session: CqlSession) : TakeBookData {
     override fun createBook(livro: Livro): Livro {
         val livroCadastrado = Livro(livro.id, livro.nome, livro.numero_de_paginas, livro.isbn, livro.preco)
         session.execute(
@@ -28,7 +28,8 @@ class takeBookImpl(private val session: CqlSession) : TakeBookData {
     }
 
 
-    override fun buscaLivros(rows: List<Row>): MutableList<Livro> {
+    override fun buscaLivros(): MutableList<Livro> {
+        val rows = session.execute("SELECT * FROM Livro").toList()
         val livros: MutableList<Livro> = mutableListOf()
         for (row in rows) {
             val id = row.getUuid(CqlIdentifier.fromCql("id"))!!
@@ -51,13 +52,16 @@ class takeBookImpl(private val session: CqlSession) : TakeBookData {
         return livros
 
     }
-//
-//    override fun buscaLivroPorId(id: UUID): Any {
-//        val livroASerEncontrado = session.execute(
-//            "SELECT * FROM LIVRO WHERE id = ?",
-//            id
-//        )
-//        return livroASerEncontrado;
-//
-//    }
+
+
+    override fun buscaLivroPorId(id: UUID): Any {
+        val row = session.execute("SELECT * FROM LIVRO WHERE id = ?", id)
+        return row.map {
+            it.getUuid(CqlIdentifier.fromCql("id"))
+            it.getString(CqlIdentifier.fromCql("nome"))
+            it.getString(CqlIdentifier.fromCql("numero_de_paginas"))
+            it.getString(CqlIdentifier.fromCql("isbn"))
+            it.getFloat(CqlIdentifier.fromCql("preco"))
+        }
+    }
 }

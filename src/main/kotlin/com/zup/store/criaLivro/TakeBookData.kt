@@ -9,6 +9,6 @@ import javax.inject.Singleton
 @Singleton
 interface TakeBookData {
     fun createBook(livro: Livro): Livro
-    fun buscaLivros(rows: List<Row>): MutableList<Livro>
-//    fun buscaLivroPorId(id: UUID): Any
+    fun buscaLivros(): MutableList<Livro>
+    fun buscaLivroPorId(id: UUID): Any
 }
