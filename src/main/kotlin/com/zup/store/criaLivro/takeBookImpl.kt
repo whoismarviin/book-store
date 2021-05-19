@@ -37,12 +37,15 @@ class takeBookImpl(private val session: CqlSession) : TakeBookData {
             val isbn = row.getString(CqlIdentifier.fromCql("isbn"))!!
             val preco = row.getFloat(CqlIdentifier.fromCql("preco"))!!
             livros.add(
-                id,
-                nome,
-                nP,
-                isbn,
-                preco
+                Livro(
+                    id,
+                    nome,
+                    nP,
+                    isbn,
+                    preco
+                )
             )
+
         }
 
         return livros
