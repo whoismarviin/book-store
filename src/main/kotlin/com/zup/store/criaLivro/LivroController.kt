@@ -3,7 +3,6 @@ package com.zup.store.criaLivro
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType.APPLICATION_JSON
 import io.micronaut.http.annotation.*
-import java.util.*
 
 
 @Controller("api/livros")
@@ -23,13 +22,13 @@ class LivroController(private val service: takeBookImpl) {
         return HttpResponse.ok(livros)
 
     }
-
-    @Get("/{id}")
-    fun buscaLivroPorId(id: UUID): HttpResponse<Any> {
-        val livroASerEncontrado = service.buscaLivroPorId(id)
-        return HttpResponse.ok(livroASerEncontrado)
-
-
-    }
+//
+//    @Get("/{id}")
+//    fun buscaLivroPorId(id: UUID): HttpResponse<Any> {
+//        val livroASerEncontrado = service.buscaLivroPorId(id)
+//        return HttpResponse.ok(livroASerEncontrado)
+//
+//
+//    }
 
 }

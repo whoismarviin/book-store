@@ -1,10 +1,10 @@
 package com.zup.store.criaLivro
 
+import com.datastax.oss.driver.api.core.CqlIdentifier
 import com.datastax.oss.driver.api.core.CqlSession
 import com.datastax.oss.driver.api.core.cql.Row
 import com.datastax.oss.driver.api.core.cql.SimpleStatement
 import com.zup.store.Livro
-import java.util.*
 import javax.inject.Singleton
 
 @Singleton
@@ -28,8 +28,23 @@ class takeBookImpl(private val session: CqlSession) : TakeBookData {
     }
 
 
-    override fun buscaLivros(): List<Row> {
-        val livros = session.execute("SELECT * FROM LIVRO").toList()
+    override fun buscaLivros(rows: List<Row>): MutableList<Livro> {
+        val livros: MutableList<Livro> = mutableListOf()
+        for (row in rows) {
+            val id = row.getUuid(CqlIdentifier.fromCql("id"))!!
+            val nome = row.getString(CqlIdentifier.fromCql("nome"))!!
+            val nP = row.getString(CqlIdentifier.fromCql("numero_de_paginas"))!!
+            val isbn = row.getString(CqlIdentifier.fromCql("isbn"))!!
+            val preco = row.getFloat(CqlIdentifier.fromCql("preco"))!!
+            livros.add(
+                id,
+                nome,
+                nP,
+                isbn,
+                preco
+            )
+        }
+
         return livros
 
     }
@@ -43,4 +58,3 @@ class takeBookImpl(private val session: CqlSession) : TakeBookData {
 //
 //    }
 }
-
