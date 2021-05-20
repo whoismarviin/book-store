@@ -31,7 +31,6 @@ dependencies {
     implementation("io.micronaut.nats:micronaut-nats")
     implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut:micronaut-http-client")
-    implementation group: 'io.kotest', name: 'kotest-core', version: '4.2.0.RC2', ext: 'pom'
     implementation("javax.annotation:javax.annotation-api")
     implementation("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
@@ -40,9 +39,9 @@ dependencies {
     implementation("io.micronaut:micronaut-validation")
     runtimeOnly("com.fasterxml.jackson.module:jackson-module-kotlin")
 
-    testImplementation 'io.kotest:kotest-runner-junit5:<version>' // for kotest framework
-    testImplementation 'io.kotest:kotest-assertions-core:<version>' // for kotest core jvm assertions
-    testImplementation 'io.kotest:kotest-property:<version>' // for kotest property test
+    testImplementation('io.kotest:kotest-runner-junit5:<>') // for kotest framework
+    testImplementation 'io.kotest:kotest-assertions-core:<4.0.7>' // for kotest core jvm assertions
+    testImplementation 'io.kotest:kotest-property:<4.6.0>' // for kotest property test
 }
 
 

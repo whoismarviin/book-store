@@ -1,4 +1,4 @@
-package com.zup.store.criaLivro
+package com.zup.store.livroData.database
 
 import com.datastax.oss.driver.api.core.CqlIdentifier
 import com.datastax.oss.driver.api.core.CqlSession
