@@ -16,7 +16,6 @@ cassandra:
 
 ## Nats
 nats:
-  enabled: false
   addresses: ${nats_host:localhost}
   username: ${nats_username:guest}
   password: ${nats_password:guest}
