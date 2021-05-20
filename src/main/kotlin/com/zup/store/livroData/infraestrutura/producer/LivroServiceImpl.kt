@@ -7,7 +7,6 @@ import javax.inject.Singleton
 @Singleton
 class LivroServiceImpl(private val cliente: LivroClient) : LivroService {
     override fun send(livro: Livro): Livro {
-        cliente.send(livro)
-        return livro
+        return cliente.send(livro)
     }
 }

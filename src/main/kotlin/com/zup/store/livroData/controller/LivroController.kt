@@ -4,6 +4,7 @@ import com.zup.store.Livro
 import com.zup.store.livroData.Dto.CriaLivroRequest
 import com.zup.store.livroData.database.TakeBookImpl
 import com.zup.store.livroData.infraestrutura.producer.LivroService
+import com.zup.store.livroData.infraestrutura.producer.LivroServiceImpl
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.MediaType.APPLICATION_JSON
 import io.micronaut.http.annotation.*
@@ -11,7 +12,7 @@ import java.util.*
 
 
 @Controller("api/livros")
-class LivroController(private val service: TakeBookImpl, private val livroService: LivroService) {
+class LivroController(private val service: TakeBookImpl, private val livroService: LivroServiceImpl) {
 
     @Post("/cadastro")
     @Produces(APPLICATION_JSON)

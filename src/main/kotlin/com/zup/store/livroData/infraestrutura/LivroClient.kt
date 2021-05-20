@@ -5,8 +5,8 @@ import io.micronaut.nats.annotation.NatsClient
 import io.micronaut.nats.annotation.Subject
 
 @NatsClient
-open interface LivroClient {
-    @Subject("livro")
-    fun send(livro: Livro)
+interface LivroClient {
+    @Subject("livros")
+    fun send(livro: Livro): Livro
 
 }
