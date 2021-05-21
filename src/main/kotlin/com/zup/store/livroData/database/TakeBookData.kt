@@ -9,4 +9,5 @@ interface TakeBookData {
     fun createBook(livro: Livro): Livro
     fun buscaLivros(): MutableList<Livro>
     fun buscaLivroPorId(id: UUID): Any
+    fun deletaLivroPorId(id: UUID)
 }

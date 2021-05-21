@@ -4,6 +4,9 @@ import com.datastax.oss.driver.api.core.CqlIdentifier
 import com.datastax.oss.driver.api.core.CqlSession
 import com.datastax.oss.driver.api.core.cql.SimpleStatement
 import com.zup.store.Livro
+import io.nats.client.Message
+import java.lang.Exception
+import java.net.http.HttpClient
 import java.util.*
 import javax.inject.Singleton
 
@@ -55,13 +58,26 @@ class TakeBookImpl(private val session: CqlSession) : TakeBookData {
 
 
     override fun buscaLivroPorId(id: UUID): Any {
-        val row = session.execute("SELECT * FROM LIVRO WHERE id = ?", id)
+        val row = session.execute("SELECT * FROM book.LIVRO WHERE Livro.id = ?", id)
         return row.map {
             it.getUuid(CqlIdentifier.fromCql("id"))
             it.getString(CqlIdentifier.fromCql("nome"))
             it.getString(CqlIdentifier.fromCql("numero_de_paginas"))
             it.getString(CqlIdentifier.fromCql("isbn"))
             it.getFloat(CqlIdentifier.fromCql("preco"))
+        }
+    }
+
+    override fun deletaLivroPorId(id: UUID) {
+        try {
+            session.execute(
+                SimpleStatement.newInstance(
+                    "DELETE FROM book.Livro WHERE id = ?", id
+                )
+            )
+        } catch (e: Exception) {
+            throw Exception("Não podemos deletar, tente novamente")
+
         }
     }
 }
